@@ -1,13 +1,22 @@
 import pickle
 import streamlit as st
 import pandas as pd
+from sklearn.metrics import r2_score, mean_squared_error
 
 #load model
 with open("Model/model.pkl", "rb")as file:
     model=pickle.load(file)
+
+with open("Model/metrics.pkl", "rb")as f:
+    metrics=pickle.load(f)    
+    
+with open("Model/best_params.pkl", "rb") as f:
+    best_params=pickle.load(f)    
     
 st.title("🏠California housing price prediction")
+st.write("This prediction is based on a machine learning model trained on California dataset")
 st.subheader("Enter the housing features below")
+st.sidebar.header("Input features")
 
 #Input fields(same order as datasets)
 col1, col2, col3, col4 =st.columns(4)
@@ -32,4 +41,12 @@ if st.button("predict house price"):
   predict_value=model.predict(pd.DataFrame([[MedInc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude]],
   columns=["MedInc","HouseAge","AveRooms","AveBedrms","Population","AveOccup","Latitude","Longitude"]))
   
-  st.success(f"predicted house value:${predict_value[0]*100000:,.2f}")
+  st.success(f"predicted house value:$ {predict_value[0]*100000:,.2f}")
+  
+  #Display Metrics
+st.write("Model metrics")
+for key,values in metrics.items():   #.items()-returns all key-value pairs as tuple
+    st.write(f"{key.upper()}:{values:.3f}")
+    
+st.write("Best model parameters:")
+st.json(best_params)

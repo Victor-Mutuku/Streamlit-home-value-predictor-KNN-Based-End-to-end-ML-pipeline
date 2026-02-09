@@ -54,10 +54,20 @@ grid_search.fit(X_train, y_train)
 best_model = grid_search.best_estimator_
 y_pred = best_model.predict(X_test)
 
+#Must assign or save best_params_
+best_params = grid_search.best_params_
+
 #The metrics
 r2_score = r2_score(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
-rmse=mean_squared_error = mse**0.5
+rmse=mean_squared_error=mse**0.5
+
+metrics={
+    "r2":r2_score,
+    "mse":mse,
+    "rmse":rmse,
+    "best_cv_r2":grid_search.best_score_, #mean cross-validated R² score of the best hyperparameter combination, computed during training
+}
 
 #Print results
 print("Best Hyperparameters:", grid_search.best_params_)
@@ -66,10 +76,17 @@ print("R2 Score:", r2_score)
 print("MSE:", mse)
 print("RMSE:", rmse)
 
-save_path="Model/model.pkl"
+model_path="Model/model.pkl"
 
 os.makedirs("Model",exist_ok=True)
-with open(save_path, "wb") as file:
-    pickle.dump(best_model, file)
+with open(model_path, "wb") as file:
+    pickle.dump(best_model, file)  
     
-print("model saved successfully")    
+metrics_path="Model/metrics.pkl"    
+with open(metrics_path, "wb")as f:
+    pickle.dump(metrics,f)
+        
+with open("Model/best_params.pkl", "wb") as f:   #Already assigned the variable (best_params) up there
+    pickle.dump(best_params,f)        
+               
+print("model, metrics and best_params saved successfully")
