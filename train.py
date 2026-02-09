@@ -66,7 +66,7 @@ print("R2 Score:", r2_score)
 print("MSE:", mse)
 print("RMSE:", rmse)
 
-save_path="Model\model.pkl"
+save_path="Model/model.pkl"
 
 os.makedirs("Model",exist_ok=True)
 with open(save_path, "wb") as file:

@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 #load model
-with open("Model\model.pkl", "rb")as file:
+with open("Model/model.pkl", "rb")as file:
     model=pickle.load(file)
     
 st.title("California housing price prediction")
