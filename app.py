@@ -10,7 +10,7 @@ st.title("California housing price prediction")
 st.write("Enter the housing features below")
 
 #Input fields(same order as datasets)
-Medinc=st.number_input("median income",value=3.0)
+MedInc=st.number_input("median income",value=3.0)
 HouseAge = st.number_input("House Age", value=20.0)
 AveRooms = st.number_input("Average Rooms", value=5.0)
 AveBedrms = st.number_input("Average Bedrooms", value=1.0)
@@ -20,9 +20,9 @@ Latitude = st.number_input("Latitude", value=34.0)
 Longitude = st.number_input("Longitude", value=-118.0)
 
 if st.button("predict price"):
-  input_df=pd.DataFrame([[Medinc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude]],
-  columns=["Medinc","HouseAge","AveRooms","AveBedrms","Population","AveOccup","Latitude","Longitude"])
+  input_df=pd.DataFrame([[MedInc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude]],
+  columns=["MedInc","HouseAge","AveRooms","AveBedrms","Population","AveOccup","Latitude","Longitude"])
   
   prediction=model.predict(input_df)
   
-  st.success(f"predicted house value:$prediction[0]*100000:2f")
+  st.success(f"predicted house value:${prediction[0]*100000:,.2f}")
